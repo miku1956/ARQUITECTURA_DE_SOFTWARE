@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio - Elias Matos | Arquitectura</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #000000;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Carrusel de fondo */
+.background-carousel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+}
+
+.carousel-slide img,
+.carousel-slide video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.3) blur(2px);
+}
+
+.carousel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(127,0,255,0.3), rgba(0,0,0,0.7));
+    z-index: 1;
+}
+
+.content-wrapper {
+    position: relative;
+    z-index: 2;
+}
+        
+        /* Animación de fondo */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .animated-bg {
+            background: linear-gradient(135deg, #7F00FF, #4A148C, #FF1744, #7F00FF);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        .neon-border {
+            border: 2px solid #7F00FF;
+            box-shadow: 0 0 10px #7F00FF, inset 0 0 10px rgba(127, 0, 255, 0.1);
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF, 0 0 30px #00FFFF;
+        }
+        
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(127, 0, 255, 0.5), 0 0 40px rgba(127, 0, 255, 0.3);
+        }
+        
+        .cyan-glow {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.3);
+        }
+        
+        .red-glow {
+            box-shadow: 0 0 20px rgba(255, 23, 68, 0.5), 0 0 40px rgba(255, 23, 68, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #7F00FF, #00FFFF, #FF1744);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-effect {
+            background: rgba(33, 33, 33, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(127, 0, 255, 0.3);
+        }
+        
+        .loader { 
+            border: 3px solid #212121; 
+            border-top: 3px solid #7F00FF; 
+            border-radius: 50%; 
+            width: 40px; 
+            height: 40px; 
+            animation: spin 1s linear infinite; 
+        }
+        
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(127, 0, 255, 0.6), 0 0 60px rgba(127, 0, 255, 0.4);
+        }
+        /* Estilo para input de archivo */
+.file-input-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+}
+
+.file-input-wrapper input[type=file] {
+    position: absolute;
+    left: -9999px;
+}
+
+.file-input-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, rgba(74, 20, 140, 0.3), rgba(33, 33, 33, 0.8));
+    border: 2px dashed #7F00FF;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-input-label:hover {
+    border-color: #00FFFF;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.file-input-label.has-file {
+    border-style: solid;
+    border-color: #00FFFF;
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(33, 33, 33, 0.8));
+}
+        
+        .card-gradient {
+            background: linear-gradient(135deg, rgba(74, 20, 140, 0.3), rgba(33, 33, 33, 0.8));
+        }
+        
+        .btn-neon {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-neon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-neon:hover::before {
+            left: 100%;
+        }
+        
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #7F00FF, #FF1744);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #00FFFF, #7F00FF);
+        }
+    </style>
+</head>
+<body class="bg-black min-h-screen">
+    
+    <!-- CARRUSEL DE FONDO -->
+    <div class="background-carousel" id="backgroundCarousel">
+        <!-- Las slides se agregarán dinámicamente -->
+        <div class="carousel-overlay"></div>
+    </div>
+
+    <!-- CONTROLES DEL CARRUSEL -->
+    <div class="fixed bottom-8 right-8 z-50 flex gap-3">
+        <button onclick="prevSlide()" class="glass-effect p-3 rounded-full neon-border hover-lift text-cyan-400 hover:text-cyan-300 transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </button>
+        <button onclick="toggleCarousel()" class="glass-effect px-4 py-3 rounded-full neon-border hover-lift text-cyan-400 hover:text-cyan-300 transition text-sm font-medium" id="carouselToggle">
+            ⏸️ Pausar
+        </button>
+        <button onclick="nextSlide()" class="glass-effect p-3 rounded-full neon-border hover-lift text-cyan-400 hover:text-cyan-300 transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
+    </div>
+
+    <div class="content-wrapper">
+    
+    <!-- NAVBAR -->
+    <nav class="glass-effect sticky top-0 z-40 border-b-2 border-purple-600">
+    <div class="container mx-auto px-6 py-4">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-8">
+                <!-- LOGO CIRCULAR Y TÍTULO -->
+                <div class="flex items-center gap-3">
+                    <div class="relative group">
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-400 rounded-full blur-lg opacity-75 group-hover:opacity-100 transition animate-pulse"></div>
+                        <img src="imagenes/logo.jpg" alt="Logo" class="relative w-14 h-14 object-cover rounded-full border-3 border-cyan-400 p-1.5 bg-gradient-to-br from-purple-900 to-black hover:scale-110 transition-transform duration-300 neon-glow">
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold gradient-text leading-tight">Portafolio Arquitectura</h1>
+                        <p class="text-xs text-cyan-400 font-medium">Elias Matos</p>
+                    </div>
+                </div>
+                    <div class="flex space-x-6">
+                        <button onclick="showPage('inicio')" class="text-sm font-medium text-cyan-400 transition hover:text-cyan-300 neon-text" id="btn-inicio">Inicio</button>
+                        <button onclick="showPage('proyectos')" class="text-sm font-medium text-gray-400 hover:text-cyan-400 transition" id="btn-proyectos">Proyectos</button>
+                    </div>
+                </div>
+                <div id="nav-user"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO -->
+    <main class="container mx-auto px-6 py-12" id="main-content"></main>
+    
+    </div> <!-- Cierre content-wrapper -->
+
+    <!-- MODAL LOGIN -->
+    <div id="login-modal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div class="glass-effect rounded-2xl p-8 max-w-md w-full neon-border neon-glow">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold gradient-text">Iniciar Sesión</h2>
+                <button onclick="closeLogin()" class="text-cyan-400 hover:text-cyan-300 text-2xl">✕</button>
+            </div>
+
+            <form onsubmit="handleLogin(event)">
+                <div class="mb-4">
+                    <label class="block text-cyan-400 mb-2 font-medium text-sm">Email</label>
+                    <input type="email" id="email" required class="w-full px-4 py-3 bg-black border-2 border-purple-600 rounded-lg text-white focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)]">
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-cyan-400 mb-2 font-medium text-sm">Contraseña</label>
+                    <input type="password" id="password" required class="w-full px-4 py-3 bg-black border-2 border-purple-600 rounded-lg text-white focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)]">
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg hover:from-purple-700 hover:to-pink-700 transition font-medium btn-neon neon-glow">
+                    Iniciar Sesión
+                </button>
+            </form>
+
+            <div class="mt-6 text-sm text-gray-400 bg-black/50 p-4 rounded-lg border border-purple-600">
+                <p class="font-semibold mb-2 text-cyan-400">🔐 Solo para calificación:</p>
+                <p class="text-xs">Profesor: fernandez.bejarano@profesor.com / Profe2024!</p>
+            
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        // ============================================
+        // CONFIGURACIÓN DEL CARRUSEL DE FONDO
+        // ============================================
+        let carouselSlides = [
+            // IMÁGENES DE ARQUITECTURA
+            { type: 'image', url: 'carusel/imagen3.jpg' },
+            { type: 'image', url: 'carusel/imagen5.jpg' },
+            { type: 'image', url: 'carusel/animacion1.gif' },
+            { type: 'image', url: 'carusel/sistemas.gif' },
+            
+            // MÁS IMÁGENES DE ARQUITECTURA
+            { type: 'video', url: 'videos/background2.mp4' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1920' }
+        ];
+        
+        let currentSlideIndex = 0;
+        let carouselInterval = null;
+        let isCarouselPlaying = true;
+        
+        function initCarousel() {
+            const carousel = document.getElementById('backgroundCarousel');
+            
+            // Crear slides
+            carouselSlides.forEach((slide, index) => {
+                const slideDiv = document.createElement('div');
+                slideDiv.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
+                slideDiv.dataset.index = index;
+                
+                if (slide.type === 'image') {
+                    const img = document.createElement('img');
+                    img.src = slide.url;
+                    img.alt = 'Background';
+                    slideDiv.appendChild(img);
+                } else if (slide.type === 'video') {
+                    const video = document.createElement('video');
+                    video.src = slide.url;
+                    video.autoplay = true;
+                    video.loop = true;
+                    video.muted = true;
+                    video.playsInline = true;
+                    slideDiv.appendChild(video);
+                }
+                
+                carousel.appendChild(slideDiv);
+            });
+            
+            // Iniciar autoplay
+            startCarousel();
+        }
+        
+        function startCarousel() {
+            if (carouselInterval) return;
+            carouselInterval = setInterval(() => {
+                nextSlide();
+            }, 5000); // Cambiar cada 5 segundos
+        }
+        
+        function stopCarousel() {
+            if (carouselInterval) {
+                clearInterval(carouselInterval);
+                carouselInterval = null;
+            }
+        }
+        
+        function nextSlide() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            slides[currentSlideIndex].classList.remove('active');
+            
+            currentSlideIndex = (currentSlideIndex + 1) % carouselSlides.length;
+            
+            slides[currentSlideIndex].classList.add('active');
+            
+            // Reproducir video si es el slide actual
+            const currentSlide = slides[currentSlideIndex];
+            const video = currentSlide.querySelector('video');
+            if (video) {
+                video.play();
+            }
+        }
+        
+        function prevSlide() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            slides[currentSlideIndex].classList.remove('active');
+            
+            currentSlideIndex = (currentSlideIndex - 1 + carouselSlides.length) % carouselSlides.length;
+            
+            slides[currentSlideIndex].classList.add('active');
+            
+            // Reproducir video si es el slide actual
+            const currentSlide = slides[currentSlideIndex];
+            const video = currentSlide.querySelector('video');
+            if (video) {
+                video.play();
+            }
+        }
+        
+        function toggleCarousel() {
+            const toggleBtn = document.getElementById('carouselToggle');
+            
+            if (isCarouselPlaying) {
+                stopCarousel();
+                toggleBtn.textContent = '▶️ Reproducir';
+                isCarouselPlaying = false;
+            } else {
+                startCarousel();
+                toggleBtn.textContent = '⏸️ Pausar';
+                isCarouselPlaying = true;
+            }
+        }
+        
+        // ============================================
+        // CONFIGURACIÓN
+        // ============================================
+        let SUPABASE_URL = 'https://vpdsobghsarcksffhyub.supabase.co';
+        let SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwZHNvYmdoc2FyY2tzZmZoeXViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAxMzExNDUsImV4cCI6MjA3NTcwNzE0NX0.o1llJT7YRfpQjZZtm374CL8ATymR786yp2FXMO0OGpM';
+        let currentUser = null;
+        let currentPage = 'inicio';
+        let allTasks = [];
+
+        // Verificar credenciales guardadas
+        if (window.SUPABASE_URL_SAVED && window.SUPABASE_KEY_SAVED) {
+            SUPABASE_URL = window.SUPABASE_URL_SAVED;
+            SUPABASE_KEY = window.SUPABASE_KEY_SAVED;
+            document.getElementById('config-modal').style.display = 'none';
+        }
+
+        function saveSupabaseConfig(event) {
+            event.preventDefault();
+            SUPABASE_URL = document.getElementById('supabase-url').value.trim();
+            SUPABASE_KEY = document.getElementById('supabase-key').value.trim();
+            window.SUPABASE_URL_SAVED = SUPABASE_URL;
+            window.SUPABASE_KEY_SAVED = SUPABASE_KEY;
+            document.getElementById('config-modal').style.display = 'none';
+            showPage('proyectos');
+        }
+
+        // ============================================
+        // FUNCIONES DE SUPABASE
+        // ============================================
+        async function supabaseRequest(endpoint, options = {}) {
+            const url = `${SUPABASE_URL}/rest/v1/${endpoint}`;
+            const headers = {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=representation',
+                ...options.headers
+            };
+
+            const response = await fetch(url, { ...options, headers });
+            if (!response.ok) throw new Error(`Error ${response.status}`);
+            const text = await response.text();
+            return text ? JSON.parse(text) : [];
+        }
+
+        async function login(email, password) {
+            const usuarios = await supabaseRequest(
+                `usuarios?email=eq.${encodeURIComponent(email)}&password=eq.${encodeURIComponent(password)}&select=*`
+            );
+            if (usuarios.length === 0) throw new Error('Credenciales incorrectas');
+            return usuarios[0];
+        }
+
+        async function getTareas() {
+            return await supabaseRequest('tareas?select=*&order=semana.asc');
+        }
+
+        async function crearTarea(tarea) {
+            const result = await supabaseRequest('tareas', {
+                method: 'POST',
+                body: JSON.stringify(tarea)
+            });
+            return result[0];
+        }
+
+        async function actualizarTarea(id, datos) {
+            const result = await supabaseRequest(`tareas?id=eq.${id}`, {
+                method: 'PATCH',
+                body: JSON.stringify(datos)
+            });
+            return result[0];
+        }
+
+        async function eliminarTarea(id) {
+            await supabaseRequest(`tareas?id=eq.${id}`, { method: 'DELETE' });
+        }
+
+        // ============================================
+        // FUNCIONES DE UI
+        // ============================================
+        function showNotification(message, type = 'info') {
+            const colors = { 
+                success: 'bg-gradient-to-r from-green-600 to-cyan-600 border-green-400', 
+                error: 'bg-gradient-to-r from-red-600 to-pink-600 border-red-400', 
+                info: 'bg-gradient-to-r from-purple-600 to-blue-600 border-purple-400' 
+            };
+            const notification = document.createElement('div');
+            notification.className = `fixed top-20 right-4 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg z-50 border-2 neon-glow`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        function showPage(page) {
+            currentPage = page;
+            const btnInicio = document.getElementById('btn-inicio');
+            const btnProyectos = document.getElementById('btn-proyectos');
+            
+            btnInicio.className = page === 'inicio' 
+                ? 'text-sm font-medium text-cyan-400 transition neon-text'
+                : 'text-sm font-medium text-gray-400 hover:text-cyan-400 transition';
+            
+            btnProyectos.className = page === 'proyectos'
+                ? 'text-sm font-medium text-cyan-400 transition neon-text'
+                : 'text-sm font-medium text-gray-400 hover:text-cyan-400 transition';
+            
+            if (page === 'inicio') {
+                renderInicio();
+            } else if (page === 'proyectos') {
+                loadAndRenderProyectos();
+            }
+        }
+
+        function updateNavUser() {
+    const navUser = document.getElementById('nav-user');
+    
+    if (currentUser) {
+        // Definir imagen según tipo de usuario
+        let userImage = '';
+        let borderColor = '';
+        
+        if (currentUser.tipo === 'estudiante') {
+            userImage = 'imagenes/elias.jpg'; // Foto del estudiante
+            borderColor = 'border-cyan-400';
+        } else if (currentUser.tipo === 'profesor') {
+            userImage = 'imagenes/profesor.jpeg'; // Foto del profesor
+            borderColor = 'border-green-400';
+        } else if (currentUser.tipo === 'admin') {
+            userImage = 'imagenes/foto.jpg'; // Foto del admin
+            borderColor = 'border-purple-400';
+        }
+        
+        navUser.innerHTML = `
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-3 glass-effect px-4 py-2 rounded-lg border-2 ${borderColor}">
+                    <div class="relative group">
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-400 rounded-full blur-md opacity-75 group-hover:opacity-100 transition animate-pulse"></div>
+                        <img src="${userImage}" alt="${currentUser.nombre}" class="relative w-10 h-10 object-cover rounded-full border-2 ${borderColor} neon-glow hover:scale-110 transition-transform duration-300">
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-white">${currentUser.nombre}</p>
+                        <p class="text-xs text-cyan-400 font-bold">${currentUser.tipo.charAt(0).toUpperCase() + currentUser.tipo.slice(1)}</p>
+                    </div>
+                </div>
+                <button onclick="handleLogout()" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-lg hover:from-red-700 hover:to-pink-700 transition btn-neon red-glow">
+                    🚪 Salir
+                </button>
+            </div>
+        `;
+    } else {
+        navUser.innerHTML = `
+            <button onclick="openLogin()" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition text-sm btn-neon neon-glow">
+                🔐 Gestión
+            </button>
+        `;
+    }
+}
+
+        function renderInicio() {
+    document.getElementById('main-content').innerHTML = `
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="glass-effect rounded-2xl p-12 neon-border hover-lift">
+                
+                <!-- FOTO DE PERFIL -->
+                <div class="mb-8 flex justify-center">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-600 via-cyan-400 to-pink-600 rounded-full blur-xl opacity-75 animate-pulse"></div>
+                        <img src="imagenes/foto.jpg" alt="Elias Matos" class="relative w-40 h-40 rounded-full object-cover border-4 border-cyan-400 neon-glow hover:scale-110 transition-transform duration-300">
+                    </div>
+                </div>
+                
+                <h1 class="text-6xl font-bold gradient-text mb-6 pulse-animation">ELIAS MATOS</h1>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple-600 via-cyan-400 to-pink-600 mx-auto mb-8 neon-glow"></div>
+                <p class="text-xl text-gray-300 leading-relaxed mb-6">
+                    Estudiante de Arquitectura apasionado por el diseño innovador y la creación de espacios
+                    que transforman la experiencia humana. Este portafolio documenta mi progreso académico
+                    a lo largo de <span class="text-cyan-400 font-bold">16 semanas</span> de aprendizaje intensivo.
+                </p>
+                <div class="grid grid-cols-3 gap-6 mt-8">
+                    <div class="card-gradient p-6 rounded-lg border-2 border-purple-600 hover-lift">
+                        <div class="text-4xl mb-2">🏛️</div>
+                        <h3 class="text-cyan-400 font-semibold mb-2">Diseño</h3>
+                        <p class="text-gray-400 text-sm">Proyectos innovadores</p>
+                    </div>
+                    <div class="card-gradient p-6 rounded-lg border-2 border-cyan-400 hover-lift">
+                        <div class="text-4xl mb-2">📚</div>
+                        <h3 class="text-pink-400 font-semibold mb-2">16 Semanas</h3>
+                        <p class="text-gray-400 text-sm">Progreso académico</p>
+                    </div>
+                    <div class="card-gradient p-6 rounded-lg border-2 border-pink-600 hover-lift">
+                        <div class="text-4xl mb-2">💡</div>
+                        <h3 class="text-purple-400 font-semibold mb-2">Innovación</h3>
+                        <p class="text-gray-400 text-sm">Soluciones creativas</p>
+                    </div>
+                </div>
+                <button onclick="showPage('proyectos')" class="mt-8 px-8 py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-400 text-white rounded-lg hover:from-purple-700 hover:via-pink-700 hover:to-cyan-500 transition font-medium btn-neon neon-glow">
+                    Ver Proyectos →
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+        async function loadAndRenderProyectos() {
+            const content = document.getElementById('main-content');
+            content.innerHTML = '<div class="flex justify-center items-center py-20"><div class="loader"></div></div>';
+            
+            try {
+                allTasks = await getTareas();
+                
+                if (currentUser && currentUser.tipo === 'estudiante') {
+                    renderVistaEstudiante();
+                } else if (currentUser && currentUser.tipo === 'profesor') {
+                    renderVistaProfesor();
+                } else if (currentUser && currentUser.tipo === 'admin') {
+                    renderVistaAdmin();
+                } else {
+                    renderVistaPublica();
+                }
+            } catch (error) {
+                showNotification('Error al cargar proyectos: ' + error.message, 'error');
+            }
+        }
+
+        function renderVistaPublica() {
+            const content = document.getElementById('main-content');
+            
+            // Organizar tareas por semana
+            const semanas = [];
+            for (let i = 1; i <= 16; i++) {
+                const tareasSemana = allTasks.filter(t => t.semana === i);
+                semanas.push({
+                    numero: i,
+                    tareas: tareasSemana
+                });
+            }
+            
+            const semanasConTareas = semanas.filter(s => s.tareas.length > 0).length;
+
+            content.innerHTML = `
+                <div class="max-w-7xl mx-auto">
+                    <div class="mb-8">
+                        <h2 class="text-4xl font-bold gradient-text mb-2">🏛️ Proyectos por Semana</h2>
+                        <p class="text-gray-400">Portafolio académico de <span class="text-cyan-400">16 semanas</span> - Elias Matos</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        ${semanas.map(sem => {
+                            const tieneTareas = sem.tareas.length > 0;
+                            
+                            return `
+                                <div class="card-gradient rounded-xl p-6 border-2 ${tieneTareas ? 'border-cyan-400 cyan-glow' : 'border-purple-600'} hover-lift">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h3 class="text-lg font-bold gradient-text">Semana ${sem.numero}</h3>
+                                        <div class="flex items-center gap-2">
+                                            ${tieneTareas ? `<span class="text-2xl">✅</span>` : '<span class="text-2xl pulse-animation">⏳</span>'}
+                                            ${tieneTareas ? `<span class="bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs px-2 py-1 rounded-full">${sem.tareas.length}</span>` : ''}
+                                        </div>
+                                    </div>
+                                    
+                                    ${tieneTareas ? `
+                                        <div class="space-y-3">
+                                            ${sem.tareas.map((tarea, idx) => `
+                                                <div class="bg-black/50 p-3 rounded-lg border-l-2 border-cyan-400">
+                                                    <h4 class="text-white font-semibold text-sm mb-1">${tarea.titulo}</h4>
+                                                    <p class="text-gray-400 text-xs mb-2 line-clamp-1">${tarea.descripcion}</p>
+                                                    <div class="flex items-center justify-between">
+                                                        ${tarea.calificacion !== null ? `
+                                                            <div class="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-2 py-1 rounded text-xs font-bold cyan-glow">
+                                                                📊 ${tarea.calificacion}/20
+                                                            </div>
+                                                        ` : '<span class="text-yellow-400 text-xs">⏳ Pendiente</span>'}
+                                                        ${tarea.archivo_url ? `
+                                                            <button onclick="viewFile('${tarea.id}', '${tarea.archivo_nombre || 'archivo'}', '${tarea.archivo_tipo || ''}')" class="text-cyan-400 hover:text-cyan-300 text-xs flex items-center gap-1">
+                                                                👁️ Ver
+                                                            </button>
+                                                        ` : ''}
+                                                    </div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    ` : `
+                                        <p class="text-gray-500 text-sm">Sin proyectos aún</p>
+                                    `}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+
+                    <div class="mt-8 glass-effect rounded-xl p-6 neon-border neon-glow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-xl font-bold gradient-text mb-2">📊 Progreso General</h3>
+                                <p class="text-gray-400">Semanas con proyectos: <span class="text-cyan-400 font-bold">${semanasConTareas} de 16</span> | Total de proyectos: <span class="text-purple-400 font-bold">${allTasks.length}</span></p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-4xl font-bold gradient-text">${Math.round((semanasConTareas / 16) * 100)}%</div>
+                                <div class="text-sm text-gray-400">Completado</div>
+                            </div>
+                        </div>
+                        <div class="mt-4 bg-black rounded-full h-3 overflow-hidden border border-purple-600">
+                            <div class="bg-gradient-to-r from-purple-600 via-cyan-400 to-pink-600 h-full rounded-full transition-all neon-glow" style="width: ${(semanasConTareas / 16) * 100}%"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderVistaEstudiante() {
+            const content = document.getElementById('main-content');
+            
+            // Organizar tareas por semana
+            const tareasPorSemana = {};
+            for (let i = 1; i <= 16; i++) {
+                tareasPorSemana[i] = allTasks.filter(t => t.semana === i);
+            }
+            
+            const semanasConTareas = Object.values(tareasPorSemana).filter(t => t.length > 0).length;
+            const totalCalificadas = allTasks.filter(t => t.calificacion !== null).length;
+
+            content.innerHTML = `
+                <div class="max-w-6xl mx-auto">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                        <div class="card-gradient p-6 rounded-xl border-2 border-purple-600 hover-lift">
+                            <div class="text-3xl mb-2">📚</div>
+                            <div class="text-2xl font-bold gradient-text">${allTasks.length}</div>
+                            <div class="text-gray-400 text-sm">Total de proyectos</div>
+                        </div>
+                        <div class="card-gradient p-6 rounded-xl border-2 border-cyan-400 hover-lift">
+                            <div class="text-3xl mb-2">📅</div>
+                            <div class="text-2xl font-bold gradient-text">${semanasConTareas}/16</div>
+                            <div class="text-gray-400 text-sm">Semanas con proyectos</div>
+                        </div>
+                        <div class="card-gradient p-6 rounded-xl border-2 border-pink-600 hover-lift">
+                            <div class="text-3xl mb-2">📊</div>
+                            <div class="text-2xl font-bold gradient-text">${totalCalificadas}</div>
+                            <div class="text-gray-400 text-sm">Proyectos calificados</div>
+                        </div>
+                    </div>
+
+                    <h2 class="text-3xl font-bold gradient-text mb-6">📤 Subir Nuevo Proyecto</h2>
+                    <form onsubmit="handleSubmitTask(event)" class="glass-effect rounded-xl p-8 neon-border mb-8">
+                        <div class="mb-6">
+                            <label class="block text-cyan-400 mb-2 font-medium">Selecciona la Semana *</label>
+                            <select id="task-semana" required class="w-full px-4 py-3 bg-black border-2 border-purple-600 rounded-lg text-white focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)]">
+                                <option value="">-- Elige una semana --</option>
+                                ${[...Array(16)].map((_, i) => {
+                                    const semana = i + 1;
+                                    const numTareas = tareasPorSemana[semana].length;
+                                    return `<option value="${semana}">Semana ${semana}${numTareas > 0 ? ` (${numTareas} proyecto${numTareas > 1 ? 's' : ''})` : ''}</option>`;
+                                }).join('')}
+                            </select>
+                            <p class="text-xs text-gray-400 mt-1">💡 Puedes subir múltiples proyectos por semana</p>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-cyan-400 mb-2 font-medium">Título del Proyecto *</label>
+                            <input type="text" id="task-titulo" required class="w-full px-4 py-3 bg-black border-2 border-purple-600 rounded-lg text-white focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)]" placeholder="Ej: Diseño de Casa Moderna">
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-cyan-400 mb-2 font-medium">Descripción *</label>
+                            <textarea id="task-descripcion" required class="w-full px-4 py-3 bg-black border-2 border-purple-600 rounded-lg text-white focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)] h-32" placeholder="Describe tu proyecto..."></textarea>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-cyan-400 mb-2 font-medium">Archivo del Proyecto</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="task-archivo" accept=".pdf,.jpg,.jpeg,.png,.zip,.rar" onchange="handleFileSelect(event)">
+                                <label for="task-archivo" class="file-input-label" id="file-label">
+                                    <span>📎</span>
+                                    <span id="file-name">Seleccionar archivo (PDF, imágenes, ZIP)</span>
+                                </label>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-1">Máximo 10MB - Formatos: PDF, JPG, PNG, ZIP</p>
+                            <div id="file-preview" class="mt-2"></div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg hover:from-purple-700 hover:to-pink-700 transition flex items-center justify-center gap-2 font-medium btn-neon neon-glow">
+                            📤 Subir Proyecto
+                        </button>
+                    </form>
+
+                    <h3 class="text-2xl font-bold gradient-text mb-6">📚 Mis Proyectos por Semana</h3>
+                    <div class="space-y-6">
+                        ${allTasks.length === 0 ? '<p class="text-gray-400 text-center py-8">No hay proyectos aún</p>' : 
+                        [...Array(16)].map((_, i) => {
+                            const semana = i + 1;
+                            const tareasS = tareasPorSemana[semana];
+                            if (tareasS.length === 0) return '';
+                            
+                            return `
+                                <div class="glass-effect rounded-xl p-6 neon-border">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <h4 class="text-xl font-bold gradient-text">Semana ${semana}</h4>
+                                        <span class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1 rounded-full text-sm">${tareasS.length} proyecto${tareasS.length > 1 ? 's' : ''}</span>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        ${tareasS.map(task => `
+                                            <div class="card-gradient rounded-xl p-5 border-2 border-purple-600 hover-lift">
+                                                <div class="flex justify-between items-start mb-3">
+                                                    <div class="flex-1">
+                                                        <h5 class="text-lg font-semibold text-white mb-2">${task.titulo}</h5>
+                                                        <p class="text-gray-400 text-sm mb-3">${task.descripcion}</p>
+                                                    </div>
+                                                    ${task.calificacion !== null ? `
+                                                        <div class="bg-gradient-to-br from-cyan-600 to-blue-600 text-white px-3 py-2 rounded-lg font-bold text-center ml-3 cyan-glow">
+                                                            <div class="text-xl">${task.calificacion}</div>
+                                                            <div class="text-xs">/20</div>
+                                                        </div>
+                                                    ` : '<span class="text-yellow-400 text-sm ml-3 pulse-animation">⏳</span>'}
+                                                </div>
+                                                ${task.archivo_url ? `
+                                                    <button onclick="viewFile('${task.id}', '${task.archivo_nombre || 'archivo'}', '${task.archivo_tipo || ''}')" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 text-sm mb-3">
+                                                        👁️ Ver archivo${task.archivo_nombre ? ` (${task.archivo_nombre})` : ''}
+                                                    </button>
+                                                ` : ''}
+                                                ${task.comentario_profesor ? `
+                                                    <div class="mt-3 bg-black/50 p-3 rounded-lg border-l-4 border-cyan-400">
+                                                        <p class="text-xs text-cyan-400 mb-1">💬 Comentario del profesor:</p>
+                                                        <p class="text-gray-300 text-sm">${task.comentario_profesor}</p>
+                                                    </div>
+                                                ` : ''}
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderVistaProfesor() {
+            const content = document.getElementById('main-content');
+            
+            // Agrupar tareas por semana
+            const tareasPorSemana = {};
+            for (let i = 1; i <= 16; i++) {
+                tareasPorSemana[i] = allTasks.filter(t => t.semana === i);
+            }
+            
+            const pendientes = allTasks.filter(t => t.calificacion === null).length;
+            const calificadas = allTasks.filter(t => t.calificacion !== null).length;
+            
+            content.innerHTML = `
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-3xl font-bold gradient-text mb-8">👨‍🏫 Calificar Proyectos</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                        <div class="card-gradient p-6 rounded-xl border-2 border-purple-600 hover-lift">
+                            <div class="text-3xl mb-2">📚</div>
+                            <div class="text-2xl font-bold gradient-text">${allTasks.length}</div>
+                            <div class="text-gray-400 text-sm">Total proyectos</div>
+                        </div>
+                        <div class="card-gradient p-6 rounded-xl border-2 border-yellow-500 hover-lift">
+                            <div class="text-3xl mb-2">⏳</div>
+                            <div class="text-2xl font-bold gradient-text">${pendientes}</div>
+                            <div class="text-gray-400 text-sm">Pendientes</div>
+                        </div>
+                        <div class="card-gradient p-6 rounded-xl border-2 border-cyan-400 hover-lift">
+                            <div class="text-3xl mb-2">✅</div>
+                            <div class="text-2xl font-bold gradient-text">${calificadas}</div>
+                            <div class="text-gray-400 text-sm">Calificadas</div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8">
+                        ${allTasks.length === 0 ? '<p class="text-gray-400 text-center py-8">No hay proyectos para calificar</p>' :
+                        [...Array(16)].map((_, i) => {
+                            const semana = i + 1;
+                            const tareasS = tareasPorSemana[semana];
+                            if (tareasS.length === 0) return '';
+                            
+                            return `
+                                <div class="glass-effect rounded-xl p-6 neon-border">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <h3 class="text-xl font-bold gradient-text">Semana ${semana}</h3>
+                                        <span class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1 rounded-full text-sm">${tareasS.length} proyecto${tareasS.length > 1 ? 's' : ''}</span>
+                                        ${tareasS.filter(t => t.calificacion === null).length > 0 ? '<span class="bg-gradient-to-r from-yellow-600 to-orange-600 text-white px-3 py-1 rounded-full text-sm pulse-animation">⏳ Pendientes</span>' : '<span class="bg-gradient-to-r from-green-600 to-cyan-600 text-white px-3 py-1 rounded-full text-sm">✅ Completado</span>'}
+                                    </div>
+                                    <div class="space-y-4">
+                                        ${tareasS.map(task => `
+                                            <div class="card-gradient rounded-xl p-6 border-2 ${task.calificacion === null ? 'border-yellow-500' : 'border-cyan-400'} hover-lift">
+                                                <div class="flex justify-between items-start mb-4">
+                                                    <div class="flex-1">
+                                                        <div class="flex items-center gap-2 mb-2">
+                                                            ${task.calificacion !== null ? '<span class="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-3 py-1 rounded-lg text-sm">✅ Calificado</span>' : '<span class="bg-gradient-to-r from-yellow-600 to-orange-600 text-white px-3 py-1 rounded-lg text-sm pulse-animation">⏳ Pendiente</span>'}
+                                                        </div>
+                                                        <h4 class="text-xl font-semibold text-white mb-2">${task.titulo}</h4>
+                                                        <p class="text-gray-400 mb-2">${task.descripcion}</p>
+                                                        ${task.archivo_url ? `
+                                                            <button onclick="viewFile('${task.id}', '${task.archivo_nombre || 'archivo'}', '${task.archivo_tipo || ''}')" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 inline-flex">
+                                                                👁️ Ver archivo${task.archivo_nombre ? ` (${task.archivo_nombre})` : ''}
+                                                            </button>
+                                                        ` : ''}
+                                                    </div>
+                                                    ${task.calificacion !== null ? `
+                                                        <div class="bg-gradient-to-br from-cyan-600 to-blue-600 text-white px-6 py-3 rounded-lg font-bold text-center ml-4 cyan-glow">
+                                                            <div class="text-3xl">${task.calificacion}</div>
+                                                            <div class="text-xs">/20</div>
+                                                        </div>
+                                                    ` : ''}
+                                                </div>
+
+                                                ${task.calificacion === null ? `
+                                                    <div class="mt-4 border-t-2 border-purple-600 pt-4">
+                                                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                                            <div>
+                                                                <label class="block text-cyan-400 mb-2 text-sm">Calificación (0-20) *</label>
+                                                                <input type="number" min="0" max="20" id="calif-${task.id}" class="w-full px-4 py-2 bg-black border-2 border-purple-600 rounded-lg text-white focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)]">
+                                                            </div>
+                                                            <div class="md:col-span-2">
+                                                                <label class="block text-cyan-400 mb-2 text-sm">Comentario (opcional)</label>
+                                                                <input type="text" id="comment-${task.id}" placeholder="Retroalimentación para el estudiante..." class="w-full px-4 py-2 bg-black border-2 border-purple-600 rounded-lg text-white focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)]">
+                                                            </div>
+                                                        </div>
+                                                        <button onclick="handleGrade('${task.id}')" class="mt-4 bg-gradient-to-r from-green-600 to-cyan-600 text-white px-6 py-2 rounded-lg hover:from-green-700 hover:to-cyan-700 transition flex items-center gap-2 btn-neon cyan-glow">
+                                                            ✏️ Calificar Proyecto
+                                                        </button>
+                                                    </div>
+                                                ` : task.comentario_profesor ? `
+                                                    <div class="mt-4 bg-black/50 p-4 rounded-lg border-l-4 border-cyan-400">
+                                                        <p class="text-xs text-cyan-400 mb-1">💬 Tu comentario:</p>
+                                                        <p class="text-gray-300 text-sm">${task.comentario_profesor}</p>
+                                                    </div>
+                                                ` : ''}
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderVistaAdmin() {
+            const content = document.getElementById('main-content');
+            
+            // Agrupar tareas por semana
+            const tareasPorSemana = {};
+            for (let i = 1; i <= 16; i++) {
+                tareasPorSemana[i] = allTasks.filter(t => t.semana === i);
+            }
+            
+            const semanasConTareas = Object.values(tareasPorSemana).filter(t => t.length > 0).length;
+            
+            content.innerHTML = `
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-3xl font-bold gradient-text mb-8">⚙️ Administrar Proyectos</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                        <div class="card-gradient p-4 rounded-lg border-2 border-purple-600 hover-lift">
+                            <div class="text-2xl mb-1">📚</div>
+                            <div class="text-xl font-bold gradient-text">${allTasks.length}</div>
+                            <div class="text-gray-400 text-xs">Total proyectos</div>
+                        </div>
+                        <div class="card-gradient p-4 rounded-lg border-2 border-cyan-400 hover-lift">
+                            <div class="text-2xl mb-1">📅</div>
+                            <div class="text-xl font-bold gradient-text">${semanasConTareas}/16</div>
+                            <div class="text-gray-400 text-xs">Semanas activas</div>
+                        </div>
+                        <div class="card-gradient p-4 rounded-lg border-2 border-green-500 hover-lift">
+                            <div class="text-2xl mb-1">✅</div>
+                            <div class="text-xl font-bold gradient-text">${allTasks.filter(t => t.calificacion !== null).length}</div>
+                            <div class="text-gray-400 text-xs">Calificados</div>
+                        </div>
+                        <div class="card-gradient p-4 rounded-lg border-2 border-yellow-500 hover-lift">
+                            <div class="text-2xl mb-1">⏳</div>
+                            <div class="text-xl font-bold gradient-text">${allTasks.filter(t => t.calificacion === null).length}</div>
+                            <div class="text-gray-400 text-xs">Pendientes</div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8">
+                        ${allTasks.length === 0 ? '<p class="text-gray-400 text-center py-8">No hay proyectos</p>' :
+                        [...Array(16)].map((_, i) => {
+                            const semana = i + 1;
+                            const tareasS = tareasPorSemana[semana];
+                            if (tareasS.length === 0) return '';
+                            
+                            return `
+                                <div class="glass-effect rounded-xl p-6 neon-border">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <h3 class="text-xl font-bold gradient-text">Semana ${semana}</h3>
+                                        <span class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1 rounded-full text-sm">${tareasS.length} proyecto${tareasS.length > 1 ? 's' : ''}</span>
+                                    </div>
+                                    <div class="space-y-4">
+                                        ${tareasS.map(task => `
+                                            <div class="card-gradient rounded-xl p-6 border-2 border-purple-600 hover-lift">
+                                                <div class="flex justify-between items-start">
+                                                    <div class="flex-1">
+                                                        <div class="flex items-center gap-2 mb-2">
+                                                            ${task.calificacion !== null ? `<span class="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-2 py-1 rounded text-xs">${task.calificacion}/20</span>` : '<span class="bg-gradient-to-r from-yellow-600 to-orange-600 text-white px-2 py-1 rounded text-xs">Sin calificar</span>'}
+                                                        </div>
+                                                        <h4 class="text-lg font-semibold text-white mb-2">${task.titulo}</h4>
+                                                        <p class="text-gray-400 mb-2 text-sm">${task.descripcion}</p>
+                                                        ${task.archivo_url ? `
+                                                            <button onclick="viewFile('${task.id}', '${task.archivo_nombre || 'archivo'}', '${task.archivo_tipo || ''}')" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 text-sm mb-2">
+                                                                👁️ Ver archivo
+                                                            </button>
+                                                        ` : ''}
+                                                        ${task.comentario_profesor ? `
+                                                            <p class="text-sm text-gray-500 italic">💬 "${task.comentario_profesor}"</p>
+                                                        ` : ''}
+                                                    </div>
+                                                    <button onclick="handleDelete('${task.id}')" class="bg-gradient-to-r from-red-600 to-pink-600 text-white px-4 py-2 rounded-lg hover:from-red-700 hover:to-pink-700 transition flex items-center gap-2 ml-4 btn-neon red-glow text-sm">
+                                                        🗑️ Eliminar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============================================
+// MANEJO DE ARCHIVOS
+// ============================================
+function handleFileSelect(event) {
+    const file = event.target.files[0];
+    const fileLabel = document.getElementById('file-label');
+    const fileName = document.getElementById('file-name');
+    const filePreview = document.getElementById('file-preview');
+    
+    if (file) {
+        // Validar tamaño (10MB máximo)
+        const maxSize = 10 * 1024 * 1024;
+        if (file.size > maxSize) {
+            showNotification('❌ El archivo es demasiado grande. Máximo 10MB', 'error');
+            event.target.value = '';
+            return;
+        }
+        
+        // Actualizar UI
+        fileName.textContent = `${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+        fileLabel.classList.add('has-file');
+        
+        // Preview para imágenes
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                filePreview.innerHTML = `
+                    <img src="${e.target.result}" class="w-full h-32 object-cover rounded-lg border-2 border-cyan-400 mt-2">
+                `;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            filePreview.innerHTML = `
+                <div class="bg-black/50 p-3 rounded-lg border border-purple-600 mt-2 flex items-center gap-2">
+                    <span class="text-2xl">📄</span>
+                    <div>
+                        <p class="text-white text-sm font-medium">${file.name}</p>
+                        <p class="text-gray-400 text-xs">${file.type || 'Archivo'}</p>
+                    </div>
+                </div>
+            `;
+        }
+    } else {
+        fileName.textContent = 'Seleccionar archivo (PDF, imágenes, ZIP)';
+        fileLabel.classList.remove('has-file');
+        filePreview.innerHTML = '';
+    }
+}
+
+function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
+
+function viewFile(taskId, fileName, fileType) {
+    const task = allTasks.find(t => t.id === taskId);
+    if (!task || !task.archivo_url) {
+        showNotification('❌ Archivo no encontrado', 'error');
+        return;
+    }
+    
+    // Crear modal con previsualización
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black/95 backdrop-blur-sm flex items-center justify-center z-50 p-4';
+    modal.onclick = (e) => {
+        if (e.target === modal) modal.remove();
+    };
+    
+    let previewContent = '';
+    
+    // Si es una imagen
+    if (fileType && fileType.startsWith('image/')) {
+        previewContent = `
+            <div class="w-full h-full flex items-center justify-center">
+                <img src="${task.archivo_url}" class="max-w-full max-h-full rounded-lg border-2 border-cyan-400 object-contain">
+            </div>
+        `;
+    } 
+    // Si es PDF
+    else if (fileType && fileType === 'application/pdf') {
+        previewContent = `
+            <iframe src="${task.archivo_url}" class="w-full h-full rounded-lg border-2 border-cyan-400"></iframe>
+        `;
+    }
+    // Si es otro tipo de archivo
+    else {
+        previewContent = `
+            <div class="w-full h-full flex flex-col items-center justify-center text-center p-8">
+                <div class="text-8xl mb-6">📄</div>
+                <h3 class="text-white text-2xl font-bold mb-4">${fileName}</h3>
+                <p class="text-gray-400 mb-8">Este tipo de archivo no se puede previsualizar</p>
+                <div class="flex gap-4">
+                    <a href="${task.archivo_url}" download="${fileName}" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-lg hover:from-purple-700 hover:to-pink-700 transition font-medium btn-neon neon-glow">
+                        📥 Descargar Archivo
+                    </a>
+                </div>
+            </div>
+        `;
+    }
+    
+    modal.innerHTML = `
+        <div class="glass-effect rounded-2xl w-full max-w-6xl h-5/6 flex flex-col neon-border neon-glow">
+            <!-- Header -->
+            <div class="flex justify-between items-center p-6 border-b-2 border-purple-600">
+                <div class="flex items-center gap-4">
+                    <div class="bg-gradient-to-r from-purple-600 to-pink-600 p-3 rounded-lg">
+                        <span class="text-2xl">${fileType && fileType.startsWith('image/') ? '🖼️' : fileType === 'application/pdf' ? '📄' : '📦'}</span>
+                    </div>
+                    <div>
+                        <h3 class="text-white text-xl font-bold">${fileName}</h3>
+                        <p class="text-gray-400 text-sm">${fileType || 'Archivo'}</p>
+                    </div>
+                </div>
+                <button class="text-cyan-400 hover:text-cyan-300 text-3xl transition hover:rotate-90 duration-300 close-modal-btn">
+                    ✕
+                </button>
+            </div>
+            
+            <!-- Preview Area -->
+            <div class="flex-1 p-6 overflow-hidden">
+                ${previewContent}
+            </div>
+            
+            <!-- Footer con acciones -->
+            <div class="p-6 border-t-2 border-purple-600 flex gap-4">
+                <a href="${task.archivo_url}" download="${fileName}" class="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-pink-700 transition text-center font-medium btn-neon neon-glow flex items-center justify-center gap-2">
+                    📥 Descargar
+                </a>
+                <button onclick="openFileInNewTab('${task.archivo_url}', '${fileName}', '${fileType}')" class="flex-1 bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-6 py-3 rounded-lg hover:from-cyan-700 hover:to-blue-700 transition font-medium btn-neon cyan-glow flex items-center justify-center gap-2">
+                    🔗 Abrir en nueva pestaña
+                </button>
+                <button class="bg-gradient-to-r from-red-600 to-pink-600 text-white px-6 py-3 rounded-lg hover:from-red-700 hover:to-pink-700 transition font-medium btn-neon red-glow close-modal-btn">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Prevenir scroll del body cuando el modal está abierto
+    document.body.style.overflow = 'hidden';
+    
+    // Función para restaurar scroll y cerrar modal
+    const removeModal = () => {
+        document.body.style.overflow = '';
+        modal.remove();
+    };
+    
+    // Agregar evento a todos los botones de cerrar
+    modal.querySelectorAll('.close-modal-btn').forEach(btn => {
+        btn.onclick = removeModal;
+    });
+    
+    // También cerrar al hacer clic fuera del modal
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            removeModal();
+        }
+    };
+}
+
+// ============================================
+// MANEJADORES DE EVENTOS
+// ============================================
+function openFileInNewTab(base64Data, fileName, fileType) {
+    try {
+        // Convertir Base64 a Blob
+        const byteString = atob(base64Data.split(',')[1]);
+        const mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];
+        
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        
+        for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+        
+        const blob = new Blob([ab], { type: mimeString });
+        const blobUrl = URL.createObjectURL(blob);
+        
+        // Abrir en nueva pestaña
+        const newWindow = window.open(blobUrl, '_blank');
+        
+        if (!newWindow) {
+            showNotification('⚠️ Por favor permite ventanas emergentes para ver el archivo', 'error');
+            return;
+        }
+        
+        // Establecer título de la pestaña
+        newWindow.document.title = fileName;
+        
+        // Limpiar URL después de 1 minuto para liberar memoria
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+        
+        showNotification('✅ Archivo abierto en nueva pestaña', 'success');
+    } catch (error) {
+        console.error('Error al abrir archivo:', error);
+        showNotification('❌ Error al abrir el archivo', 'error');
+    }
+}
+        function openLogin() {
+            document.getElementById('login-modal').classList.remove('hidden');
+        }
+
+        function closeLogin() {
+            document.getElementById('login-modal').classList.add('hidden');
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                currentUser = await login(email, password);
+                closeLogin();
+                updateNavUser();
+                showNotification('✅ Sesión iniciada correctamente', 'success');
+                showPage('proyectos');
+            } catch (error) {
+                showNotification('❌ ' + error.message, 'error');
+            }
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            updateNavUser();
+            showNotification('👋 Sesión cerrada', 'info');
+            showPage('proyectos');
+        }
+
+        async function handleSubmitTask(event) {
+    event.preventDefault();
+    
+    const fileInput = document.getElementById('task-archivo');
+    const file = fileInput.files[0];
+    
+    // Validar que haya un archivo
+    if (!file) {
+        showNotification('⚠️ Por favor selecciona un archivo', 'error');
+        return;
+    }
+    
+    try {
+        showNotification('⏳ Subiendo archivo...', 'info');
+        
+        // Convertir archivo a Base64
+        const base64File = await fileToBase64(file);
+        
+        const tarea = {
+            semana: parseInt(document.getElementById('task-semana').value),
+            titulo: document.getElementById('task-titulo').value,
+            descripcion: document.getElementById('task-descripcion').value,
+            archivo_url: base64File,
+            archivo_nombre: file.name,
+            archivo_tipo: file.type,
+            estudiante_id: currentUser.id
+        };
+
+        await crearTarea(tarea);
+        showNotification('✅ ¡Proyecto subido exitosamente!', 'success');
+        
+        // Limpiar formulario
+        document.getElementById('task-semana').value = '';
+        document.getElementById('task-titulo').value = '';
+        document.getElementById('task-descripcion').value = '';
+        fileInput.value = '';
+        document.getElementById('file-name').textContent = 'Seleccionar archivo (PDF, imágenes, ZIP)';
+        document.getElementById('file-label').classList.remove('has-file');
+        document.getElementById('file-preview').innerHTML = '';
+        
+        loadAndRenderProyectos();
+    } catch (error) {
+        showNotification('❌ Error: ' + error.message, 'error');
+    }
+}
+
+        async function handleGrade(taskId) {
+            const calificacion = document.getElementById(`calif-${taskId}`).value;
+            const comentario = document.getElementById(`comment-${taskId}`).value;
+
+            if (!calificacion) {
+                showNotification('⚠️ Por favor ingresa una calificación', 'error');
+                return;
+            }
+
+            try {
+                await actualizarTarea(taskId, {
+                    calificacion: parseInt(calificacion),
+                    comentario_profesor: comentario || null
+                });
+                showNotification('✅ ¡Tarea calificada exitosamente!', 'success');
+                loadAndRenderProyectos();
+            } catch (error) {
+                showNotification('❌ Error: ' + error.message, 'error');
+            }
+        }
+
+        async function handleDelete(taskId) {
+            if (!confirm('¿Estás seguro de eliminar este proyecto?')) return;
+
+            try {
+                await eliminarTarea(taskId);
+                showNotification('✅ Proyecto eliminado', 'success');
+                loadAndRenderProyectos();
+            } catch (error) {
+                showNotification('❌ Error: ' + error.message, 'error');
+            }
+        }
+
+        // ============================================
+        // INICIALIZACIÓN
+        // ============================================
+        window.addEventListener('DOMContentLoaded', () => {
+            initCarousel(); // Inicializar carrusel
+            updateNavUser();
+            showPage('inicio');
+        });
+    </script>
+</body>
+</html>
